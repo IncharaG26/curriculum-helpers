@@ -57,9 +57,9 @@ Even though the allowed selector list did not include this pattern.
 
 The root cause was the former implementation:
 
-ts
-Copy code
+
 css.includes(selector)
+
 Substrings that only appeared similar resulted in false positives during validation.
 
 🎯 Objective of This Contribution
@@ -102,40 +102,42 @@ Confirms that legitimate rules are still accepted.
 ✔️ 3. TypeScript Configuration Update
 To support Vitest’s global testing API (describe, it, etc.),
 the helpers package tsconfig.json now includes:
-
-json
-Copy code
 "types": ["node", "vitest/globals"]
-🧪 Test Execution
-Run the unit tests:
 
-bash
-Copy code
+🧪 Test Execution
+
+Run the unit tests:
 cd packages/helpers
 npx vitest --config ./vitest.unit.config.mjs run test/getStyleAny.test.ts
+
 Expected output:
-lua
-Copy code
-✓ getStyleAny selector validation
+   ✓ getStyleAny selector validation
    ✓ should not match invalid selectors
    ✓ should match on exact selector
 Test Files: 1 passed
 Tests:      2 passed
+
 📁 Modified Files
-bash
-Copy code
+
 packages/helpers/lib/index.ts             # Improved getStyleAny logic
 packages/helpers/test/getStyleAny.test.ts # New test cases
 packages/helpers/tsconfig.json            # Added Vitest type definitions
-🔗 Pull Request (PR) Details
-Branch:
-fix-selector-validation
+
+Running Tests
+Run all unit tests in this package:
+npx vitest --config ./vitest.unit.config.mjs
+
+Run only the selector validation tests:
+npx vitest --config ./vitest.unit.config.mjs run test/getStyleAny.test.ts
+
+Integration tests:
+npx vitest --config ./vitest.integration.config.mjs
+
+
+Unit and integration tests for packages/helpers pass successfully.
 
 Commit Message:
-
-csharp
-Copy code
-fix(helpers): prevent partial selector matches in getStyleAny; add tests
+fix(helpers): prevent partial selector matches in getStyleAny add tests
 This PR directly addresses the open issue related to invalid selector acceptance in the
 CSS validation logic.
 
