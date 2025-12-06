@@ -154,6 +154,5 @@ The result is a more robust and reliable helper module for future curriculum fea
 
 👩‍💻 Author
 Inchara
-Contributor & Developer
-Focused on improving open-source tooling and validation logic in educational software.
+Contributor & Developer.
 
